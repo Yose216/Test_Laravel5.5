@@ -37,19 +37,13 @@ class AnnoncesController extends Controller
     public function store(Request $request)
     {
         $user = auth()->user();
-       
-        // $user->toArray();
 
-       //  $user = $user->id;
-
-       // Log::info(var_dump($id));
-       //\Log::error($user);
-
-        $annonce = $this->validate(request(), [
+        $data = $this->validate(request(), [
           'title' => 'required',
           'descriptions' => 'required',
-          'users_id' => $user->id
         ]);
+
+        $annonce = array_merge($data, ['user_id' => $user = $user->id]);
         
         Annonces::create($annonce);
 
