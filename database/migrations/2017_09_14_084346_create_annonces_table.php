@@ -13,7 +13,7 @@ class CreateAnnoncesTable extends Migration
      */
     public function up()
     {
-        Schema::create('annonce', function (Blueprint $table) {
+        Schema::create('annonces', function (Blueprint $table) {
             $table->increments('id_annonce');
             $table->string('title');
             $table->string('descriptions');
@@ -21,7 +21,7 @@ class CreateAnnoncesTable extends Migration
             $table->integer('user_id')->unsigned();
 
         });
-        Schema::table('annonce', function(Blueprint $table) {
+        Schema::table('annonces', function(Blueprint $table) {
             $table->foreign('user_id')
                 ->references('id')->on('users')
                 ->onDelete('cascade');

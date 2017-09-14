@@ -8,7 +8,22 @@
   <body>
     <div class="container">
       <h2>Create Annonce</h2><br  />
-      <form method="post">
+      @if ($errors->any())
+          <div class="alert alert-danger">
+              <ul>
+                  @foreach ($errors->all() as $error)
+                      <li>{{ $error }}</li>
+                  @endforeach
+              </ul>
+          </div><br />
+      @endif
+      @if (\Session::has('success'))
+          <div class="alert alert-success">
+              <p>{{ \Session::get('success') }}</p>
+          </div><br />
+      @endif
+      <form method="post" action="{{url('annonce')}}">
+        {{csrf_field()}}
         <div class="row">
           <div class="col-md-4"></div>
           <div class="form-group col-md-4">
@@ -19,8 +34,8 @@
         <div class="row">
           <div class="col-md-4"></div>
             <div class="form-group col-md-4">
-              <label for="description">Description:</label>
-              <input type="text" class="form-control" name="description">
+              <label for="descriptions">Description:</label>
+              <input type="text" class="form-control" name="descriptions">
             </div>
           </div>
         </div>
