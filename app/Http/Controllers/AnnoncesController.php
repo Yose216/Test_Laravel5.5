@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Annonces;
+use Auth;
 
 class AnnoncesController extends Controller
 {
@@ -35,9 +36,19 @@ class AnnoncesController extends Controller
      */
     public function store(Request $request)
     {
+        $user = auth()->user();
+       
+        // $user->toArray();
+
+       //  $user = $user->id;
+
+       // Log::info(var_dump($id));
+       //\Log::error($user);
+
         $annonce = $this->validate(request(), [
           'title' => 'required',
-          'descriptions' => 'required'
+          'descriptions' => 'required',
+          'users_id' => $user->id
         ]);
         
         Annonces::create($annonce);

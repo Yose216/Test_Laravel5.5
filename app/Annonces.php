@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class Annonces extends Model
 {
-    protected $fillable = ['title','descriptions'];
+    protected $fillable = ['title','descriptions','user_id'];
 }
