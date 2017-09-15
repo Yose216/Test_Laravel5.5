@@ -35,6 +35,6 @@ class CreateAnnoncesTable extends Migration
      */
     public function down()
     {
-      
+        Schema::drop('annonces'); 
     }
 }

@@ -15,7 +15,8 @@ class AnnoncesController extends Controller
      */
     public function index()
     {
-        //
+        $annonces = Annonces::all()->toArray();
+        return view('annonce.index', compact('annonces'));
     }
 
     /**
@@ -53,10 +54,10 @@ class AnnoncesController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int  $id_annonce
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id_annonce)
     {
         //
     }
@@ -64,24 +65,34 @@ class AnnoncesController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int  $id_annonce
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id_annonce)
     {
-        //
+        $annonce = Annonces::find($id_annonce);
+        return view('annonce.edit',compact('annonce','id_annonce'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  int  $id_annonce
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id_annonce)
     {
-        //
+        $annonce = Annonces::find($id_annonce);
+        \Log::infos($annonce);
+        $this->validate(request(), [
+          'title' => 'required',
+          'descriptions' => 'required'
+        ]);
+        $annonce->title = $request->get('title');
+        $annonce->descriptions = $request->get('descriptions');
+        $annonce->save();
+        return redirect('annonces')->with('success','annonce has been updated');
     }
 
     /**
@@ -90,8 +101,10 @@ class AnnoncesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id_annonce)
     {
-        //
+        $annonce = Annonces::find($id_annonce);
+        $annonce->delete();
+        return redirect('annonces')->with('success','Product has been  deleted');
     }
 }
