@@ -71,6 +71,7 @@ class AnnoncesController extends Controller
     public function edit($id_annonce)
     {
         $annonce = Annonces::find($id_annonce);
+        //\Log::info(dd($annonce ));
         return view('annonce.edit',compact('annonce','id_annonce'));
     }
 
@@ -84,15 +85,17 @@ class AnnoncesController extends Controller
     public function update(Request $request, $id_annonce)
     {
         $annonce = Annonces::find($id_annonce);
-        \Log::infos($annonce);
+       // \Log::infos(Annonces::where('id_annonce', $id_annonce));
         $this->validate(request(), [
           'title' => 'required',
           'descriptions' => 'required'
         ]);
         $annonce->title = $request->get('title');
         $annonce->descriptions = $request->get('descriptions');
+
         $annonce->save();
-        return redirect('annonces')->with('success','annonce has been updated');
+        //dd($annonce);
+        return redirect('annonce')->with('success','annonce has been updated');
     }
 
     /**
